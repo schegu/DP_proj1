@@ -1,39 +1,25 @@
 package SoSafeSecurity;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 
-public class Subsection extends BuildingComponent{
-	private String location;
-	ArrayList<BuildingComponent> list;
+public class Subsection extends Building{
+	final private String cname = "Room";
 
-	public Subsection(){
-		this.list = new ArrayList<BuildingComponent>();	
-	}
-	
-	public String getLocation(){
-		return location;
-	}
-	
 	public void add(BuildingComponent bc){
-		bc.setLocation(this.location+"/"+"Room"+String.valueOf(list.size()+1));
+		bc.setLocation(location+delim+cname+String.valueOf(list.size()+1));
 		list.add(bc);
 	}
 
 	public void setLocation(String name){
-		this.location = name;
+		location = name;
 	}
 	
-	public void getchildren(){
-		Iterator<BuildingComponent> iter = list.iterator();
-		while (iter.hasNext()) {
-			BuildingComponent temp = (BuildingComponent) iter.next();
-			System.out.println(temp.getLocation());
-			temp.getchildren();
-		}
+	public boolean hasService(Service service){
+		Iterator<BuildingComponent> iter = iterator();
+	
+		//All rooms in a subsection have same type of sensor involved.
+		Room temp = (Room) iter.next();
+		return temp.hasService(service);	
 	}
-		
-	public BuildingComponent getindex(int index){
-		  return list.get(index);
-		}
+	
  }
